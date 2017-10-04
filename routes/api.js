@@ -13,8 +13,9 @@ router.post('/login', function( req, res, status ) {
   // expect username/pass in body as json
   if(req.body.username && req.body.password) {
     // validate against users collection
-    User.find({username: req.body.username})
+    User.findOne({username: req.body.username})
       .then( (result) => {
+        console.log(result);
         if( result.authenticate(req.body.password) ) {
           res.json({status: 'success'})
         } else {
