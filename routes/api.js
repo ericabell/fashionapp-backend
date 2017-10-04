@@ -93,4 +93,9 @@ router.get('/:id/weather', function( req, res, next) {
     })
 })
 
+/* send back the form to upload an image */
+router.get('/:id/clothing', function( req, res, next) {
+  res.render('upload', {title: 'Upload Clothing', id: req.params.id});
+})
+
 module.exports = router;

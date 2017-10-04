@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <form class="form-group" action="/<%= id %>/clothing" method="post" encType="multipart/form-data">
+      <label for="name">New Image</label>
+      <input type="file" name="sampleFile" />
+
+      <input type="submit" name="" value="Create!">
+    </form>
+
+  </body>
+</html>
