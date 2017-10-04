@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+const multer = require('multer');
+
 
 const User = require('../models/users');
 const owm = require('../controllers/openweathermap');
