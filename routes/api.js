@@ -24,4 +24,12 @@ router.post('/login', function( req, res, status ) {
   }
 })
 
+/* register a new user */
+router.post('/register', function( req, res, status) {
+  User.create({
+    username: req.body.username,
+    password: req.body.password
+  })
+})
+
 module.exports = router;

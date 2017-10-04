@@ -9,6 +9,14 @@ var api = require('./routes/api');
 
 var app = express();
 
+let url='mongodb://fashionapp-user:fashionapp-password@ds161304.mlab.com:61304/fashionapp-backend';
+mongoose.connect(url,
+                 {useMongoClient: true},
+                 (err)=> {
+                   if(err) throw err;
+                   else {console.log('connection to db successful');}
+                 });
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
