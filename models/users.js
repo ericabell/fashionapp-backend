@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  passwordHash: String
+  passwordHash: String,
+  location: String
 });
 
 userSchema.virtual('password')

@@ -55,4 +55,21 @@ router.get('/user/:id', function( req, res, next) {
     })
 })
 
+/* set property for userid profile */
+router.post('/:id/profile', function( req, res, next) {
+  User.findById(req.params.id)
+    .then( (result) => {
+      if(req.body.location) {
+        result.location = req.body.location;
+        result.save()
+          .then( (result) => {
+            res.json({status: 'ok', message: 'location added'})
+          })
+          .catch( (err) => {
+            res.send(err);
+          })
+      }
+    })
+})
+
 module.exports = router;
