@@ -39,4 +39,12 @@ router.post('/register', function( req, res, status) {
     })
 })
 
+/* get a list of all users */
+router.get('/users', function( req, res, status) {
+  User.find({})
+    .then( (results) => {
+      res.json({status: 'ok', users: results})
+    })
+})
+
 module.exports = router;
