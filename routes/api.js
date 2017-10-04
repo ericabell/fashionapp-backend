@@ -70,6 +70,9 @@ router.post('/:id/profile', function( req, res, next) {
           })
       }
     })
+    .catch( (err) => {
+      res.send(err);
+    })
 })
 
 module.exports = router;
