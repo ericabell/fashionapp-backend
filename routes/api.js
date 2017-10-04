@@ -30,6 +30,12 @@ router.post('/register', function( req, res, status) {
     username: req.body.username,
     password: req.body.password
   })
+    .then( (results) => {
+      res.send('user created');
+    })
+    .catch( (err) => {
+      res.send(err);
+    })
 })
 
 module.exports = router;
