@@ -7,7 +7,13 @@
   <body>
     <h1><%= title %></h1>
 
-    <form class="form-group" action="/api/<%= id %>/clothing" method="post" encType="multipart/form-data">
+    <form class="form-group" action="/api/clothing" method="post" encType="multipart/form-data">
+      <select name="userid">
+        <% users.forEach( (user) => { %>
+          <option value=<%=user['_id'] %>> <%= user.username %></option>
+        <% }) %>
+      </select>
+
       <label for="name">New Image</label>
       <input type="file" name="sampleFile" />
 
