@@ -1,6 +1,19 @@
 var express = require('express');
 var router = express.Router();
 const multer = require('multer');
+const fs = require('fs');
+
+
+let storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '.jpg')
+  }
+})
+
+const upload = multer({ storage: storage })
 
 
 const User = require('../models/users');
@@ -101,10 +114,20 @@ router.get('/:id/clothing', function( req, res, next) {
 })
 
 /* add an image to the specified id */
-router.post('/:id/clothing', function( req, res, next) {
+router.post('/:id/clothing', upload.single('sampleFile'), function( req, res, next) {
+  if(!req.file) {
+    return res.status(400).send('No files were selected');
+  }
+
+  let imageUpload = fs.readFileSync('uploads/' + req.file.filename );
+
+  fs.unlinkSync('uploads/' + req.file.filename);
+
   User.findById(req.params.id)
     .then( (user) => {
-      user.images.push({key: 'value'});
+      user.images.push({data: imageUpload,
+                        tags: 'tag list',
+                        contentType: 'image/jpeg'});
       user.save()
         .then( (result) => {
           res.json({status: 'ok', message: 'image added'})
