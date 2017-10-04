@@ -121,7 +121,7 @@ router.post('/clothing', upload.single('sampleFile'), function( req, res, next) 
   User.findById(req.body.userid)
     .then( (user) => {
       user.images.push({data: req.file.buffer,
-                        tags: 'tag list',
+                        tags: req.body.tags,
                         contentType: req.file.mimetype});
       user.save()
         .then( (result) => {
