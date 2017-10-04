@@ -85,7 +85,7 @@ router.get('/:id/weather', function( req, res, next) {
       // get the weather for that location
       owm.getWeatherForCity(location)
         .then( (result) => {
-          res.json({status: 'ok', data: result})
+          res.json({status: 'ok', data: result.data})
         })
         .catch( (err) => {
           res.send(err);
