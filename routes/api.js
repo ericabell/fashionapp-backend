@@ -9,7 +9,7 @@ router.get('/status', function(req, res, next) {
 });
 
 /* authenticate a user/pass pair */
-router.post('/login', function( req, res, status ) {
+router.post('/login', function( req, res, next ) {
   // expect username/pass in body as json
   if(req.body.username && req.body.password) {
     // validate against users collection
@@ -26,7 +26,7 @@ router.post('/login', function( req, res, status ) {
 })
 
 /* register a new user */
-router.post('/register', function( req, res, status) {
+router.post('/register', function( req, res, next) {
   User.create({
     username: req.body.username,
     password: req.body.password
@@ -40,10 +40,18 @@ router.post('/register', function( req, res, status) {
 })
 
 /* get a list of all users */
-router.get('/users', function( req, res, status) {
+router.get('/users', function( req, res, next) {
   User.find({})
     .then( (results) => {
       res.json({status: 'ok', users: results})
+    })
+})
+
+/* get a single user profile */
+router.get('/user/:id', function( req, res, next) {
+  User.findById(req.params.id)
+    .then( (result) => {
+      res.json({status: 'ok', data: result})
     })
 })
 
