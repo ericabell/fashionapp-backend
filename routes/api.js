@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const User = require('../models/users');
+const owm = require('../controllers/openweathermap');
 
 /* basic status. */
 router.get('/status', function(req, res, next) {
@@ -72,6 +73,23 @@ router.post('/:id/profile', function( req, res, next) {
     })
     .catch( (err) => {
       res.send(err);
+    })
+})
+
+/* get weather for user */
+router.get('/:id/weather', function( req, res, next) {
+  User.findById(req.params.id)
+    .then( (result) => {
+      // get the user's location
+      let location = result.location;
+      // get the weather for that location
+      owm.getWeatherForCity(location)
+        .then( (result) => {
+          res.json({status: 'ok', data: result})
+        })
+        .catch( (err) => {
+          res.send(err);
+        })
     })
 })
 
