@@ -98,4 +98,21 @@ router.get('/:id/clothing', function( req, res, next) {
   res.render('upload', {title: 'Upload Clothing', id: req.params.id});
 })
 
+/* add an image to the specified id */
+router.post('/:id/clothing', function( req, res, next) {
+  User.findById(req.params.id)
+    .then( (user) => {
+      user.images.push({key: 'value'});
+      user.save()
+        .then( (result) => {
+          res.json({status: 'ok', message: 'image added'})
+        })
+        .catch( (err) => {
+          res.send(err)
+        })
+    })
+    .catch( (err) => {
+      res.send(err)
+    })
+})
 module.exports = router;

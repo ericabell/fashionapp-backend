@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   passwordHash: String,
-  location: String
+  location: String,
+  images: [],
 });
 
 userSchema.virtual('password')
