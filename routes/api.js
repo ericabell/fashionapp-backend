@@ -3,18 +3,8 @@ var router = express.Router();
 const multer = require('multer');
 const fs = require('fs');
 
-
-let storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/')
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '.jpg')
-  }
-})
-
-const upload = multer({ storage: storage })
-
+var storage = multer.memoryStorage()
+var upload = multer({ storage: storage })
 
 const User = require('../models/users');
 const owm = require('../controllers/openweathermap');
@@ -119,15 +109,11 @@ router.post('/:id/clothing', upload.single('sampleFile'), function( req, res, ne
     return res.status(400).send('No files were selected');
   }
 
-  let imageUpload = fs.readFileSync('uploads/' + req.file.filename );
-
-  fs.unlinkSync('uploads/' + req.file.filename);
-
   User.findById(req.params.id)
     .then( (user) => {
-      user.images.push({data: imageUpload,
+      user.images.push({data: req.file.buffer,
                         tags: 'tag list',
-                        contentType: 'image/jpeg'});
+                        contentType: req.file.mimetype});
       user.save()
         .then( (result) => {
           res.json({status: 'ok', message: 'image added'})
